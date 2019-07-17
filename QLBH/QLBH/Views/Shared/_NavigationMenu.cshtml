@@ -1,47 +1,60 @@
 ﻿@model IEnumerable<QLBH.Models.Loai>
-    <div class="navigation-agileits">
-        <div class="container">
-            <nav class="navbar navbar-default">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header nav_2">
-                    <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a asp-controller="Home" asp-action="Index" class="act">Trang chủ</a></li>
-                        <!-- Mega Menu -->
-                        @{
-                            var dsLoai0 = Model.Where(p => p.MaLoai == 0).ToList();
-                        }
-                        @foreach (var lo in dsLoai0)
-                        {
-                            var dsLoai1 = Model.Where(p => p.MaLoai == lo.MaLoai).ToList();
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">@lo.TenLoai<b class="caret"></b></a>
-                                <ul class="dropdown-menu multi-column columns-3">
-                                    <div class="row">
-                                        <div class="multi-gd-img">
-                                            <ul class="multi-column-dropdown">
-                                                <h6>@lo.MoTa</h6>
-                                                @foreach (var loai in dsLoai1)
-                                                {
-                                                    <li><a asp-controller="HangHoa" asp-action="List" asp-route-loai="@loai.MaLoai">@loai.TenLoai</a></li>
-                                                }
 
-                                            </ul>
-                                        </div>
-
+<div class="navigation-agileits">
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a asp-controller="Home" asp-action="Index" class="act">Trang chủ</a></li>
+                    <!-- Mega Menu -->
+                    @{
+                        var dsLoai0 = Model.Where(p => p.Hinh == "0").ToList();
+                    }
+                    @foreach (var lo in dsLoai0)
+                    {
+                        var dsLoai1 = Model.Where(p => Int32.Parse(p.Hinh) == lo.MaLoai).ToList();
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">@lo.TenLoai<b class="caret"></b></a><!--Thằng cha nè-->
+                            <ul class="dropdown-menu multi-column columns-3">
+                                <div class="row">
+                                    <div class="multi-gd-img">
+                                        <ul class="multi-column-dropdown">
+                                            @foreach (var loai in dsLoai1)
+                                            {
+                                                <li>
+                                                    <a asp-controller="HangHoa" asp-action="List" asp-route-loai="@loai.MaLoai">@loai.TenLoai</a><!--mấy th-->
+                                                    <ol>
+                                                        @{
+                                                            var dsloaicon = Model.Where(p => Int32.Parse(p.Hinh) == loai.MaLoai).ToList();
+                                                        }
+                                                        @{
+                                                            foreach (var x in dsloaicon)
+                                                            {
+                                                                <li class="multi-gd-img">
+                                                                    <a style="color:darkmagenta" asp-controller="HangHoa" asp-action="List" asp-route-loai="@x.MaLoai">@x.TenLoai</a>
+                                                                </li>
+                                                            }
+                                                        }
+                                                    </ol>
+                                                </li>
+                                            }
+                                        </ul>
                                     </div>
-                                </ul>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </nav>
-        </div>
+                                </div>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </nav>
     </div>
+</div>

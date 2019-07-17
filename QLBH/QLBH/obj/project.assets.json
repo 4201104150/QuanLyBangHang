@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Program\\ASP.NET\\QLBH\\QLBH\\QLBH\\QLBH.csproj",
+      "projectUniqueName": "D:\\Program\\ASP.NET\\QLBHOL\\QLBH\\QLBH\\QLBH.csproj",
       "projectName": "QLBH",
-      "projectPath": "D:\\Program\\ASP.NET\\QLBH\\QLBH\\QLBH\\QLBH.csproj",
+      "projectPath": "D:\\Program\\ASP.NET\\QLBHOL\\QLBH\\QLBH\\QLBH.csproj",
       "packagesPath": "C:\\Users\\Escanor\\.nuget\\packages\\",
-      "outputPath": "D:\\Program\\ASP.NET\\QLBH\\QLBH\\QLBH\\obj\\",
+      "outputPath": "D:\\Program\\ASP.NET\\QLBHOL\\QLBH\\QLBH\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

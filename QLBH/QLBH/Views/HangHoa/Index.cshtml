@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<QLBH.MyModels.HangHoaViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Danh sách";
+    Layout = "~/Views/Shared/_LayoutTongQuat.cshtml";
 }
 <style>
     .hanghoa {
@@ -36,7 +37,7 @@
                 <img src="~/Hinh/HangHoa/@hh.Hinh" />
             </a>
             <h3>@hh.TenHH</h3>
-            <div class="giaban">Giá bán: @hh.GiaBan+đ</div>
+            <div class="giaban">Giá bán: @hh.GiaBan đ</div>
         </div>
     }
 </div>
