@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<QLBH.MyModels.HangHoaViewModel>
+
 @{
-    ViewData["Title"] = "";
+    ViewData["Title"] = "Danh sách";
     Layout = "~/Views/Shared/_LayoutTongQuat.cshtml";
 }
-
 <style>
     .hanghoa {
         height: 250px;
@@ -28,17 +28,16 @@
         color: blue;
     }
 </style>
-
-@ViewBag.loaidangchon
-
-@foreach (var hh in Model)
-{
-    <div class="col-md-3 hanghoa">
-        <a asp-action="ChiTiet" asp-controller="HangHoa"
-           asp-route-id="@hh.MaHH">
-            <img src="~/Hinh/HangHoa/@hh.Hinh" />
-        </a>
-        <p>@hh.TenHH</p>
-        <div class="giaban">Giá bán: @hh.GiaBan đ</div>
-    </div>
-}
+<div class="row">
+    @foreach (var hh in Model)
+    {
+        <div class="col-md-3 hanghoa">
+            <a asp-action="ChiTiet" asp-controller="HangHoa"
+               asp-route-mahh="@hh.MaHH">
+                <img src="~/Hinh/HangHoa/@hh.Hinh" />
+            </a>
+            <h3>@hh.TenHH</h3>
+            <div class="giaban">Giá bán: @hh.GiaBan đ</div>
+        </div>
+    }
+</div>

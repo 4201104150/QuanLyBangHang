@@ -21,9 +21,23 @@
             <div class="agile-login">
                 <ul>
                     <li><a asp-action="Register" asp-controller="KhachHang">Đăng ký</a></li>
-                    <li><a asp-action="Login" asp-controller="KhachHang">Đăng nhập</a></li>
+                    @using QLBH.MyModels
+                    @{
+                        var mkh = ViewBag.xxxyyy;
+                        if (mkh != null)
+                        {
+                            <li><a asp-action="Logout" asp-controller="KhachHang">Đăng xuất</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-action="index" asp-controller="Login">Đăng nhập</a></li>
+                        }
+                    }
+
                     <li><a asp-action="ForgotPassword" asp-controller="KhachHang">Quên mật khẩu</a></li>
                     <li><a asp-action="Contact" asp-controller="Home">Liên hệ</a></li>
+                    <li><a asp-action="Profile" asp-controller="KhachHang">Trang cá nhân</a></li>
+
                 </ul>
             </div>
             <div class="product_list_header">

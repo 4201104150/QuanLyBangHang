@@ -31,7 +31,7 @@
                                             @foreach (var loai in dsLoai1)
                                             {
                                                 <li>
-                                                    <a asp-controller="HangHoa" asp-action="List" asp-route-loai="@loai.MaLoai">@loai.TenLoai</a><!--mấy th-->
+                                                    <a asp-action="DanhSach"  asp-controller="HangHoa" asp-route-id="@loai.MaLoai">@loai.TenLoai</a><!--mấy th-->
                                                     <ol>
                                                         @{
                                                             var dsloaicon = Model.Where(p => Int32.Parse(p.Hinh) == loai.MaLoai).ToList();
@@ -40,7 +40,7 @@
                                                             foreach (var x in dsloaicon)
                                                             {
                                                                 <li class="multi-gd-img">
-                                                                    <a style="color:darkmagenta" asp-controller="HangHoa" asp-action="List" asp-route-loai="@x.MaLoai">@x.TenLoai</a>
+                                                                    <a asp-action="DanhSach" asp-controller="HangHoa"  asp-route-id="@x.MaLoai">@x.TenLoai</a>
                                                                 </li>
                                                             }
                                                         }

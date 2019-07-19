@@ -1,4 +1,4 @@
-﻿using K42Store106402.Models;
+﻿using QLBH.Models;
 using Microsoft.AspNetCore.Http;
 using QLBH.Models;
 using System;
@@ -79,27 +79,19 @@ namespace QLBH.MyModels
         /// <param name="cachtt"></param>
         /// <param name="cachvc"></param>
         /// <returns></returns>
-        public int SaveCartToDatabase(string ht,string dc,string cachtt,string cachvc)
+        public int SaveCartToDatabase()
         {
             double PhiVC = 0;//chỉnh sửa theo yêu cầu
             //Tạo đơn hàng
             HoaDon hd = new HoaDon
             {
-                MaKh = httpContextAccessor.HttpContext.Session.GetString("MaKh"),
+                MaKh = httpContextAccessor.HttpContext.Session.GetString("MaKH"),
                 NgayDat = DateTime.Now,
-                NgayGiao = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 3),
-                HoTen = ht,//họ tên
-                DiaChi=dc,//địa chỉ
-                CachThanhToan=cachtt,
-                CachVanChuyen=cachvc,
-                PhiVanChuyen = PhiVC,                
-                MaTrangThai = 1,
-                MaNv=null,
-                GhiChu="Chưa thanh toán"
+                PhiVanChuyen = PhiVC
             };
             db.Add(hd);
             db.SaveChanges();
-           
+
             //duyệt qua giỏ hàng lưu cho tiết đơn hàng
             ChiTietHd cthd = null;
             foreach (CartItem item in this.CartItems)
@@ -109,7 +101,7 @@ namespace QLBH.MyModels
                     MaHd = hd.MaHd,
                     MaHh = item.hangHoa.MaHh,
                     SoLuong = item.soLuong,
-                    DonGia = (double)item.hangHoa.DonGia * (1 - item.hangHoa.GiamGia)
+                    DonGia =(double) item.hangHoa.DonGia * (1 - item.hangHoa.GiamGia)
                 };
                 db.Add(cthd);
             }
@@ -117,7 +109,7 @@ namespace QLBH.MyModels
             //xóa giỏ hàng
             this.Clear();
 
-            return hd.MaHd; //trả về mã đơn hàng
+            return hd.MaHd;//trả về mã đơn hàng
         }
 
         public void Clear()

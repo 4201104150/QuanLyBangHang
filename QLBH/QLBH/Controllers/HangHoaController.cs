@@ -30,21 +30,19 @@ namespace QLBH.Controllers
             }));
         }
 
-        public IActionResult List(int? loai)
+        public IActionResult DanhSach(int? id)
         {
-            var dshanghoa = db.HangHoa.ToList();
-            string loaidangchon = "";
-            if(loai.HasValue)
+            List<HangHoa> dsHangHoas = new List<HangHoa>();
+            dsHangHoas = db.HangHoa.Where(p=>p.MaLoai==id).ToList();
+            ViewBag.loaidangchon = db.Loai.Where(p => p.MaLoai == id);
+            return View(dsHangHoas.Select(p => new HangHoaViewModel
             {
-                var lo = db.Loai.SingleOrDefault(p => p.MaLoai == loai);
-                if(lo!=null)
-                {
-                    loaidangchon = lo.TenLoai;
-                }
-                dshanghoa=db.HangHoa.Where(p=>p.MaLoai==loai).ToList();
-            }
-            ViewBag.loaidangchon = loaidangchon;
-            return View(dshanghoa);
+                MaHH = p.MaHh,
+                TenHH = p.TenHh,
+                Hinh = p.Hinh,
+                DonGia = p.DonGia.Value,
+                GiamGia = p.GiamGia
+            }));
         }
 
         public IActionResult ChiTiet(int? mahh)
@@ -57,5 +55,25 @@ namespace QLBH.Controllers
 
             return View(hh);
         }
+        [HttpGet("san-pham/{url}", Name = "HangHoaSeoUrl")]
+        public IActionResult HangHoaSeoUrl(string url)
+        {
+            var hh = db.HangHoa.SingleOrDefault(p => p.TenHh.SEOUrl() == url);
+
+            var lo = db.Loai.SingleOrDefault(p => p.MaLoai == hh.MaLoai);
+            if (lo != null)
+            {
+                ViewBag.LoaiDangChon = lo.TenLoai;
+            }
+            return View("ChiTiet", hh);
+        }
+
+        public IActionResult Search(string Search)
+        {
+            ViewBag.LoaiDangChon = "Kết quả tìm kiếm";
+            var dsHangHoa = db.HangHoa.Where(p => p.TenHh.Contains(Search));
+            return View("DanhSach", dsHangHoa);
+        }
+
     }
 }

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 
-namespace K42Store106402.Models
+namespace QLBH.Models
 {
     public static class SessionExtensions
     {

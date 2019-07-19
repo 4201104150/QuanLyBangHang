@@ -32,7 +32,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.hangHoa.MaHh)
@@ -41,28 +42,67 @@
                 @Html.DisplayFor(modelItem => item.hangHoa.TenHh)
             </td>
             <td>
-                <img src="~/Hinh/HangHoa/@item.hangHoa.Hinh" height="80"/>
+                <img src="~/Hinh/HangHoa/@item.hangHoa.Hinh" height="80" />
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.soLuong)
-            </td>
+            <th class="text-center">
+                <input type="number" value="@item.soLuong" min="0" class="cartItem" data-mahh="@item.hangHoa.MaHh" data-giamgia="@item.hangHoa.GiamGia"
+                       data-dongia="@item.hangHoa.DonGia" />
+            </th>
             <td>
                 @Html.DisplayFor(modelItem => item.donGia)
             </td>
+            <th class="text-right">
+                <span id="thanhtien@(item.hangHoa.MaHh)">@Html.FormatValue(item.soLuong * item.hangHoa.DonGia * (1 - item.hangHoa.GiamGia), "{0:#,##0}")</span>đ
+            </th>
             <td>
-             <table>
-                 <tr>
-                     Xóa 1
-                 </tr>
-                 |
-                 <tr>
-                     Xóa tất
-                 </tr>
-             </table>
+                <a asp-action="Clear01" asp-controller="CartItem">Xóa 1</a>|<a asp-action="Clear01" asp-controller="CartItem">Xóa hết</a>
             </td>
-            <td>
-            </td>
+            <td></td>
         </tr>
-}
+        }
     </tbody>
 </table>
+<h4 class="text-success text-right">Tổng tiền: <span id="totalAmount">@Html.FormatValue(Model.Sum(item => item.soLuong * item.hangHoa.DonGia * (1 - item.hangHoa.GiamGia)), "{0:#,##0}")</span> đ</h4>
+<div>
+<button asp-action="Payment" asp-controller="CartItem">Thanh toán</button>
+<button asp-action="Payment" asp-controller="CartItem">Cập nhật giỏ hàng</button>
+<button asp-action="Clear" asp-controller="CartItem">Xóa giỏ hàng</button>
+<button asp-action="Index" asp-controller="Home">Về trang chủ</button>
+    </div>
+@section Scripts{
+    <script>$(function () {
+            $(".cartItem").change(function () {
+                var tong = $(this).val() * $(this).attr("data-dongia") * (1 - $(this).attr("data-giamgia"));
+                $("#thanhtien" + $(this).attr("data-mahh")).html(tong.toLocaleString('en'));
+            });
+
+            $("#btnUpdateCart").click(function () {
+                var hanghoa = new Array();
+                var soluong = new Array();
+                $(".cartItem").each(function () {
+                    soluong.push($(this).val());
+                    hanghoa.push($(this).attr("data-mahh"));
+                });
+                console.log(hanghoa);
+                console.log(soluong);
+                //gửi dữ liệu lên controller Cart để xử lý
+                $.ajax({
+                    url: "Cart/UpdateCart",
+                    type:"post",
+                    dataTye: "json",
+                    contextType: "application/json",
+                    data: {
+                        productList: hanghoa,
+                        amountList: soluong
+                    },
+                    success: function (result) {
+                        console.log(result);
+                        $("#totalAmount").html(result.tongTien.toLocaleString('en'));
+                    },
+                    error: function (data) {
+                        alert(data);
+                    }
+                });
+            });
+        });</script>
+}
