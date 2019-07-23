@@ -134,5 +134,9 @@ namespace QLBH.Controllers
             myCart.UpdateCart(productList, amountList);
             return Json(new { TongTien = myCart.Total });
         }
+        public IActionResult UpdateCart()
+        {
+            return View("Index");
+        }
     }
 }
