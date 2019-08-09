@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using QLBH.Models;
 using System.Web;
 using QLBH.MyModels;
-using QLBH.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
 

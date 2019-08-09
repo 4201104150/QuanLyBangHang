@@ -9,7 +9,7 @@
     <link href="~/LayoutMau/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/LayoutMau/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/LayoutMau/css/font-awesome.css" rel="stylesheet">
-    <script src="~/LayoutMau/lib/jquery/dist/jquery.min.js"></script>
+    
 </head>
 <body>
     <!-- header -->
@@ -85,6 +85,7 @@
             @RenderBody()
         </div>
     </div>
+    @Html.Partial("_Livechatsupport")
     <!-- //footer -->
     @Html.Partial("_Footer", dsLoai.Where(p => p.Hinh == "0"))
     <!-- //footer -->

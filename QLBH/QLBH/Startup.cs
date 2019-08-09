@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QLBH.Models;
+using QLBH.MyModels;
 
 namespace QLBH
 {
@@ -68,7 +69,6 @@ namespace QLBH
             app.UseStaticFiles();
             app.UseSession();
             app.UseCookiePolicy();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
