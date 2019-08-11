@@ -9,7 +9,7 @@
     <link href="~/LayoutMau/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/LayoutMau/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="~/LayoutMau/css/font-awesome.css" rel="stylesheet">
-    
+
 </head>
 <body>
     <!-- header -->
@@ -23,15 +23,15 @@
                     <li><a asp-action="Register" asp-controller="KhachHang">Đăng ký</a></li>
                     @using QLBH.MyModels
                     @{
-                        var mkh = ViewBag.xxxyyy;
-                        if (mkh != null)
-                        {
-                            <li><a asp-action="Logout" asp-controller="KhachHang">Đăng xuất</a></li>
-                        }
-                        else
-                        {
-                            <li><a asp-action="index" asp-controller="Login">Đăng nhập</a></li>
-                        }
+                    var mkh = ViewBag.xxxyyy;
+                    if (mkh != null)
+                    {
+                    <li><a asp-action="Logout" asp-controller="KhachHang">Đăng xuất</a></li>
+                    }
+                    else
+                    {
+                    <li><a asp-action="index" asp-controller="Login">Đăng nhập</a></li>
+                    }
                     }
 
                     <li><a asp-action="ForgotPassword" asp-controller="KhachHang">Quên mật khẩu</a></li>
@@ -74,8 +74,8 @@
     <!-- navigation -->
     @using QLBH.Models
     @{
-        var db = new MyeStoreContext();
-        var dsLoai = db.Loai.ToList();
+    var db = new MyeStoreContext();
+    var dsLoai = db.Loai.ToList();
     }
     @Html.Partial("_NavigationMenu", dsLoai)
     <!-- //navigation -->
@@ -86,6 +86,19 @@
         </div>
     </div>
     @Html.Partial("_Livechatsupport")
+    <!-- AddToAny BEGIN -->
+    <div class="a2a_kit a2a_kit_size_32 a2a_default_style" data-a2a-url="https://192.0.0.1:44317/" data-a2a-title="Index">
+        <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+        <a class="a2a_button_facebook"></a>
+        <a class="a2a_button_twitter"></a>
+        <a class="a2a_button_email"></a>
+    </div>
+    <script>
+        var a2a_config = a2a_config || {};
+        a2a_config.locale = "vi";
+    </script>
+    <script async src="https://static.addtoany.com/menu/page.js"></script>
+    <!-- AddToAny END -->
     <!-- //footer -->
     @Html.Partial("_Footer", dsLoai.Where(p => p.Hinh == "0"))
     <!-- //footer -->
