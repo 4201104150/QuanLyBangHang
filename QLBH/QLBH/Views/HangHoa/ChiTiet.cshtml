@@ -39,7 +39,16 @@
                 </h4>
             </div>
             <div class="snipcart-details agileinfo_single_right_details">
-                <form asp-controller="CartItem" asp-action="AddToCart" asp-route-mahh="@Model.MaHh">
+                <form asp-controller="CartItem" asp-action="AddToCart" asp-route-mahh="@Model.MaHh" method="post">
+                    <div class="cart-plus-minus">
+                        <label for="qty">Số lượng:</label>
+                        <div class="numbers-row">
+                            <div onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 0 ) result.value--;return false;" class="dec qtybutton"><i class="fa fa-minus">&nbsp;</i></div>
+                            <input type="text" class="qty" title="Qty" value="1" maxlength="12" id="qty" name="qty">
+                            @*<input class="d-none" value="@Model.MaHh" name="productId" />*@
+                            <div onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="inc qtybutton"><i class="fa fa-plus">&nbsp;</i></div>
+                        </div>
+                    </div>
                     <input type="submit" name="submit" value="Đặt hàng" class="button">
                 </form>
             </div>

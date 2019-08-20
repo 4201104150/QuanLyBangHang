@@ -21,5 +21,13 @@ namespace QLBH.Models
             return value == null ? default(T) :
                 JsonConvert.DeserializeObject<T>(value);
         }
+        public static T GetObject<T>(this ISession session, string key)
+        {
+            string sessionValue = session.GetString(key);
+
+            T obj = string.IsNullOrEmpty(sessionValue) ? default(T) : JsonConvert.DeserializeObject<T>(sessionValue);
+
+            return obj;
+        }
     }
 }

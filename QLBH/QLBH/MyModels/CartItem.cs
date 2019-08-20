@@ -34,14 +34,14 @@ namespace QLBH.MyModels
             get => CartItems.Sum(p => p.soLuong * (double)p.hangHoa.DonGia * (1 - p.hangHoa.GiamGia));
         }
 
-        public void AddToCart(int MaHH, int soLuong = 1)
+        public void AddToCart(int MaHH, int qty)
         {
             List<CartItem> giohang = CartItems;
             //Kiếm hàng hóa (dựa MaHH) có trong giỏ hàng chưa
             CartItem item = giohang.SingleOrDefault(p => p.hangHoa.MaHh == MaHH);
             if (item != null)
             {
-                item.soLuong += soLuong;
+                item.soLuong += qty;
             }
             else
             {
@@ -49,7 +49,7 @@ namespace QLBH.MyModels
                 item = new CartItem
                 {
                     hangHoa = hh,
-                    soLuong = soLuong
+                    soLuong = qty
                 };
                 giohang.Add(item);
             }

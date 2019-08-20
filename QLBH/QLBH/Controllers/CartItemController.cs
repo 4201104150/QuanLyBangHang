@@ -38,14 +38,14 @@ namespace QLBH.Controllers
             return View(Carts);
         }
 
-        public IActionResult AddToCart(int mahh)
+        public IActionResult AddToCart(int mahh, int qty)
         {
             List<CartItem> gioHang = Carts;
             //tìm xem có chưa
             CartItem item = gioHang.SingleOrDefault(p => p.hangHoa.MaHh == mahh);
             if (item != null) //có rồi
             {
-                item.soLuong++;
+                item.soLuong+=qty;
             }
             else
             {
@@ -53,7 +53,7 @@ namespace QLBH.Controllers
                 item = new CartItem
                 {
                     hangHoa=hh,
-                    soLuong=1,
+                    soLuong=qty,
                     donGia=hh.DonGia.Value*(1-hh.GiamGia)
                 };
                 gioHang.Add(item);

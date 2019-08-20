@@ -6,6 +6,8 @@ using BraintreeHttp;
 using Microsoft.AspNetCore.Mvc;
 using PayPal.Core;
 using PayPal.v1.Payments;
+using QLBH.Models;
+using QLBH.MyModels;
 
 namespace QLBH.Controllers
 {
@@ -15,17 +17,42 @@ namespace QLBH.Controllers
         {
             return View();
         }
+        public List<CartItem> Cart
+        {
+            get
+            {
+                var data = HttpContext.Session.Get<List<CartItem>>("GioHang");
+                if (data == null)
+                {
+                    data = new List<CartItem>();
+                }
+
+                return data;
+            }
+        }
         public async Task<IActionResult> Checkout()
         {
-            var environment = new SandboxEnvironment("AdV4d6nLHabWLyemrw4BKdO9LjcnioNIOgoz7vD611ObbDUL0kJQfzrdhXEBwnH8QmV-7XZjvjRWn0kg", "EPKoPC_haZMTq5uM9WXuzoxUVdgzVqHyD5avCyVC1NCIUJeVaNNUZMnzduYIqrdw-carG9LBAizFGMyK");
+            var environment = new PayPal.Core.SandboxEnvironment("AdV4d6nLHabWLyemrw4BKdO9LjcnioNIOgoz7vD611ObbDUL0kJQfzrdhXEBwnH8QmV-7XZjvjRWn0kg", "EPKoPC_haZMTq5uM9WXuzoxUVdgzVqHyD5avCyVC1NCIUJeVaNNUZMnzduYIqrdw-carG9LBAizFGMyK");
             var client = new PayPalHttpClient(environment);
-            
-            //đọc thông tin từ đơn hang từ session
-            //foreach (var item in Cart)
-            //{
 
-            //}
+            var itemList = new ItemList()
+            {
+                Items = new List<Item>()
+            };
 
+            var tongTien = Cart.Sum(p => p.donGia);
+            foreach (var item in Cart)
+            {
+                itemList.Items.Add(new Item()
+                {
+                    Name = item.hangHoa.TenHh,
+                    Currency = "USD",
+                    Price = item.hangHoa.DonGia.ToString(),
+                    Quantity = item.soLuong.ToString(),
+                    Sku = "sku",
+                    Tax = "0"
+                });
+            }
             var payment = new Payment()
             {
                 Intent = "Đơn hàng 1",
