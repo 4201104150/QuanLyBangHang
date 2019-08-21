@@ -83,3 +83,4 @@ D:\Program\ASP.NET\QLBHOL\QLBH\QLBH\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImp
 D:\Program\ASP.NET\QLBHOL\QLBH\QLBH\obj\Debug\netcoreapp2.2\Razor\Views\_ViewStart.cshtml.g.cs
 D:\Program\ASP.NET\QLBHOL\QLBH\QLBH\bin\Debug\netcoreapp2.2\libman.json
 D:\Program\ASP.NET\QLBHOL\QLBH\QLBH\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_Livechatsupport.cshtml.g.cs
+D:\Program\ASP.NET\QLBHOL\QLBH\QLBH\obj\Debug\netcoreapp2.2\Razor\Views\Paypal\Index.cshtml.g.cs

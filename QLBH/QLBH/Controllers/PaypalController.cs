@@ -32,9 +32,11 @@ namespace QLBH.Controllers
         }
         public async Task<IActionResult> Checkout()
         {
-            var environment = new PayPal.Core.SandboxEnvironment("AdV4d6nLHabWLyemrw4BKdO9LjcnioNIOgoz7vD611ObbDUL0kJQfzrdhXEBwnH8QmV-7XZjvjRWn0kg", "EPKoPC_haZMTq5uM9WXuzoxUVdgzVqHyD5avCyVC1NCIUJeVaNNUZMnzduYIqrdw-carG9LBAizFGMyK");
+            //SandboxEnvironment(clientId, clientSerect)
+            var environment = new PayPal.Core.SandboxEnvironment("AdClqb9d9gUuXB3Fiw0AZzQlwIBzV_DDJiVjFn6XDBUTZm24OPFUyn1okTBwlFtZi7Ey02_bRqT3VkNQ", "EFjeU6v4bEPvXodnJ67MLTg7zMKgjB4V9HxCd1J1eRUD077XcZKZ4OiywGIocEAx291DL1FrAqqYSi0W");
             var client = new PayPalHttpClient(environment);
 
+            //Đọc thông tin đơn hàng từ Session
             var itemList = new ItemList()
             {
                 Items = new List<Item>()
@@ -55,22 +57,31 @@ namespace QLBH.Controllers
             }
             var payment = new Payment()
             {
-                Intent = "Đơn hàng 1",
+                Intent = "sale",
                 Transactions = new List<Transaction>()
                 {
                     new Transaction()
                     {
                         Amount = new Amount()
                         {
-                            Total = "10",
-                            Currency = "USD"
-                        }
+                            Total = tongTien.ToString(),
+                            Currency = "USD",
+                            Details = new AmountDetails
+                            {
+                                Tax = "0",
+                                Shipping = "0",
+                                Subtotal = tongTien.ToString()
+                            }
+                        },
+                        ItemList = itemList,
+                        Description = "Don hang 001",
+                        InvoiceNumber = DateTime.Now.Ticks.ToString()
                     }
                 },
                 RedirectUrls = new RedirectUrls()
                 {
-                    CancelUrl = "Paypal/Fail",
-                    ReturnUrl = "Paypal/index"
+                    CancelUrl = "http://localhost:5001/Paypal/Fail",
+                    ReturnUrl = "http://localhost:5001/Paypal/Success"
                 },
                 Payer = new Payer()
                 {
@@ -80,19 +91,39 @@ namespace QLBH.Controllers
 
             PaymentCreateRequest request = new PaymentCreateRequest();
             request.RequestBody(payment);
+
             try
             {
                 HttpResponse response = await client.Execute(request);
                 var statusCode = response.StatusCode;
                 Payment result = response.Result<Payment>();
+
+                var links = result.Links.GetEnumerator();
+                string paypalRedirectUrl = null;
+                while (links.MoveNext())
+                {
+                    LinkDescriptionObject lnk = links.Current;
+                    if (lnk.Rel.ToLower().Trim().Equals("approval_url"))
+                    {
+                        //saving the payapalredirect URL to which user will be redirected for payment  
+                        paypalRedirectUrl = lnk.Href;
+                    }
+                }
+
+                return Redirect(paypalRedirectUrl);
+
             }
             catch (HttpException httpException)
             {
                 var statusCode = httpException.StatusCode;
                 var debugId = httpException.Headers.GetValues("PayPal-Debug-Id").FirstOrDefault();
+
+                return RedirectToAction("Fail");
             }
+
             return View();
         }
+
         public IActionResult Success()
         {
             return Content("Thanh toán thành công!");
