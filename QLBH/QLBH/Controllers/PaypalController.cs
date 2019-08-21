@@ -33,7 +33,7 @@ namespace QLBH.Controllers
         public async Task<IActionResult> Checkout()
         {
             //SandboxEnvironment(clientId, clientSerect)
-            var environment = new PayPal.Core.SandboxEnvironment("AdClqb9d9gUuXB3Fiw0AZzQlwIBzV_DDJiVjFn6XDBUTZm24OPFUyn1okTBwlFtZi7Ey02_bRqT3VkNQ", "EFjeU6v4bEPvXodnJ67MLTg7zMKgjB4V9HxCd1J1eRUD077XcZKZ4OiywGIocEAx291DL1FrAqqYSi0W");
+            var environment = new PayPal.Core.SandboxEnvironment("AVfkleP2c7e0uq3ejIEtvchq0ecX8DN31BymS6MmD1vFnTpg9g1QD3-77jwZ4eAZ38jZFgDNd8NxC0ta", "EIm8Kah8ii49Dj-ckEeQT4XnOn5tFjZkJdNw_pCyV0vFqj50E0ZraaszgEfmBWXqqGGz8a-dTm97HAiu");
             var client = new PayPalHttpClient(environment);
 
             //Đọc thông tin đơn hàng từ Session
