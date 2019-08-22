@@ -81,7 +81,7 @@ namespace QLBH.Controllers
                 RedirectUrls = new RedirectUrls()
                 {
                     CancelUrl = "http://localhost:5001/Paypal/Fail",
-                    ReturnUrl = "http://localhost:5001/Paypal/Success"
+                    ReturnUrl = "/Paypal/Success"
                 },
                 Payer = new Payer()
                 {
@@ -126,7 +126,7 @@ namespace QLBH.Controllers
 
         public IActionResult Success()
         {
-            return Content("Thanh toán thành công!");
+            return View();
         }
         public IActionResult Fail()
         {
