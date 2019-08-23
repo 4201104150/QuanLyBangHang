@@ -30,17 +30,18 @@ namespace QLBH.Controllers
                 {
                     myCart = new List<CartItem>();
                 }
-
                 return myCart;
             }
         }
         public IActionResult Index()
         {
-            ViewBag.products = Carts;
+            List<HangHoaViewModel> s = new List<HangHoaViewModel>() { new HangHoaViewModel { Id = 1, Name = "Gi do", Price = 10000, Quantity = 3 }, new HangHoaViewModel { Id = 2, Name = "Gi do 2", Price = 6000, Quantity = 3 } };
+            ViewBag.products = s;
             PayPalConfig payPalConfig = PayPalService.getPayPalConfig();
             ViewBag.payPalConfig = payPalConfig;
             return View(Carts);
         }
+
         [Route("Success")]
         public IActionResult Success()
         {
@@ -81,19 +82,6 @@ namespace QLBH.Controllers
         {
             ShoppingCart myCart = new ShoppingCart(db, httpContextAccessor);
             myCart.Clear();
-            return RedirectToAction("Index");
-        }
-        public IActionResult Clear01(int mahh)
-        {
-            List<CartItem> gioHang = Carts;
-            //tìm xem có chưa
-            CartItem item = gioHang.SingleOrDefault(p => p.hangHoa.MaHh == mahh);
-            if (item != null) //có rồi
-            {
-                --item.soLuong;
-            }            
-            //lưu session
-            HttpContext.Session.Set("GioHang", gioHang);
             return RedirectToAction("Index");
         }
         public string ThongTinDonHangHtml(int MaDonHang)

@@ -23,15 +23,15 @@
                     <li><a asp-action="Register" asp-controller="KhachHang">Đăng ký</a></li>
                     @using QLBH.MyModels
                     @{
-                    var mkh = ViewBag.xxxyyy;
-                    if (mkh != null)
-                    {
-                    <li><a asp-action="Logout" asp-controller="KhachHang">Đăng xuất</a></li>
-                    }
-                    else
-                    {
-                    <li><a asp-action="index" asp-controller="Login">Đăng nhập</a></li>
-                    }
+                        var mkh = ViewBag.xxxyyy;
+                        if (mkh != null)
+                        {
+                            <li><a asp-action="Logout" asp-controller="KhachHang">Đăng xuất</a></li>
+                        }
+                        else
+                        {
+                            <li><a asp-action="index" asp-controller="Login">Đăng nhập</a></li>
+                        }
                     }
 
                     <li><a asp-action="ForgotPassword" asp-controller="KhachHang">Quên mật khẩu</a></li>
@@ -61,7 +61,7 @@
             <div class="w3l_search">
                 <form asp-action="Search" asp-controller="HangHoa">
                     <input type="search" name="Search" placeholder="Mua gì hôm nay?" required="">
-                    <button type="submit" class="btn btn-default search" aria-label="Left Align">
+                    <button type="submit" id="txtSearch" class="btn btn-default search" aria-label="Left Align">
                         <i class="fa fa-search" aria-hidden="true"> </i>
                     </button>
                     <div class="clearfix"></div>
@@ -74,8 +74,8 @@
     <!-- navigation -->
     @using QLBH.Models
     @{
-    var db = new MyeStoreContext();
-    var dsLoai = db.Loai.ToList();
+        var db = new MyeStoreContext();
+        var dsLoai = db.Loai.ToList();
     }
     @Html.Partial("_NavigationMenu", dsLoai)
     <!-- //navigation -->
@@ -107,3 +107,17 @@
     @RenderSection("Scripts", required: false)
 </body>
 </html>
+@section Script{
+    <script>
+        $("#txtSearch").keyup(function () {
+            $.ajax({
+                url: "/HangHoa/Search",
+                type: "POST",
+                data: { "Search": $(this).val() },
+                success: function (dsHangHoa) {
+                    $(".row").html(dsHangHoa);
+                }
+            });
+        });
+    </script>
+}

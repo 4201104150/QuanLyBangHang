@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QLBH.Models;
 using QLBH.MyModels;
 
@@ -18,16 +19,7 @@ namespace QLBH.Controllers
 
         public IActionResult Index()
         {
-            List<HangHoa> dsHangHoas = new List<HangHoa>();
-            dsHangHoas = db.HangHoa.ToList();
-            return View(dsHangHoas.Select(p => new HangHoaViewModel
-            {
-                MaHH = p.MaHh,
-                TenHH = p.TenHh,
-                Hinh = p.Hinh,
-                DonGia = p.DonGia.Value,
-                GiamGia = p.GiamGia
-            }));
+            return View();
         }
 
         public IActionResult DanhSach(int? id)
@@ -35,10 +27,10 @@ namespace QLBH.Controllers
             List<HangHoa> dsHangHoas = new List<HangHoa>();
             dsHangHoas = db.HangHoa.Where(p=>p.MaLoai==id).ToList();
             ViewBag.loaidangchon = db.Loai.Where(p => p.MaLoai == id);
-            return View(dsHangHoas.Select(p => new HangHoaViewModel
+            return View(dsHangHoas.Select(p => new HangHoa
             {
-                MaHH = p.MaHh,
-                TenHH = p.TenHh,
+                MaHh = p.MaHh,
+                TenHh = p.TenHh,
                 Hinh = p.Hinh,
                 DonGia = p.DonGia.Value,
                 GiamGia = p.GiamGia
@@ -67,12 +59,15 @@ namespace QLBH.Controllers
             }
             return View("ChiTiet", hh);
         }
-
-        public IActionResult Search(string Search)
+        [HttpPost]
+        public IActionResult Search(string Search = "")
         {
             ViewBag.LoaiDangChon = "Kết quả tìm kiếm";
-            var dsHangHoa = db.HangHoa.Where(p => p.TenHh.Contains(Search));
-            return View("DanhSach", dsHangHoa);
+            var dsHangHoa = db.HangHoa.Where(p => p.TenHh.Contains(Search))
+                .Include(p => p.MaNccNavigation)
+                .Include(p => p.MaLoaiNavigation)
+                .ToList();
+            return View("Search", dsHangHoa);
         }
 
     }

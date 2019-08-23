@@ -1,4 +1,4 @@
-﻿@model IEnumerable<QLBH.MyModels.HangHoaViewModel>
+﻿@model IEnumerable<QLBH.Models.HangHoa>
 
 @{
     ViewData["Title"] = "Danh sách";
@@ -33,11 +33,11 @@
     {
         <div class="col-md-3 hanghoa">
             <a asp-action="ChiTiet" asp-controller="HangHoa"
-               asp-route-mahh="@hh.MaHH">
+               asp-route-mahh="@hh.MaHh">
                 <img src="~/Hinh/HangHoa/@hh.Hinh" />
             </a>
-            <h3>@hh.TenHH</h3>
-            <div class="giaban">Giá bán: @hh.GiaBan đ</div>
+            <h3>@hh.TenHh</h3>
+            <div class="giaban">Giá bán: @hh.DonGia đ</div>
         </div>
     }
 </div>

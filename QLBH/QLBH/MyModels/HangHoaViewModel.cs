@@ -7,12 +7,9 @@ namespace QLBH.MyModels
 {
     public class HangHoaViewModel
     {
-        public int MaHH { get; set; }
-        public string TenHH { get; set; }
-        public string Hinh { get; set; }
-        public double DonGia { get; set; }
-        public double GiamGia { get; set; }
-        public double GiaBan => DonGia * (1 - GiamGia);
-        public bool DangKhuyenMai => GiamGia > 0;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Price { get; set; }
+        public int Quantity { get; set; }
     }
 }
