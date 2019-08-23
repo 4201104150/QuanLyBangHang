@@ -1,5 +1,93 @@
-﻿@model QLBH.Models.HangHoa
+﻿@model IEnumerable<QLBH.MyModels.HangHoaViewModel>
 @{
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_LayoutTongQuat.cshtml";
 }
+<style>
+    .hanghoa {
+        height: 250px;
+        border-radius: 5px;
+        text-align: center;
+        position: relative;
+    }
+
+        .hanghoa:hover {
+            border: 1px solid blue;
+        }
+
+        .hanghoa img {
+            height: 150px;
+        }
+
+    .giaban {
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        font-size: large;
+        color: blue;
+    }
+</style>
+<label>Sản phẩm hot</label>
+<div class="row">
+    <div class="col-md-3 hanghoa">
+        <a asp-action="ChiTiet" asp-controller="HangHoa"
+           asp-route-mahh="1001">
+            <img src="~/Hinh/HangHoa/lop1.jpg" />
+        </a>
+        
+        <div class="giaban"><p>Sách giáo khoa lớp 1</p>
+        Giá bán: 20000 USD</div>
+    </div>
+    <div class="col-md-3 hanghoa">
+        <a asp-action="ChiTiet" asp-controller="HangHoa"
+           asp-route-mahh="1009">
+            <img src="~/Hinh/HangHoa/lop3.jpg" />
+        </a>
+        
+        <div class="giaban"><p>Sách giáo khoa lớp 3</p>
+        Giá bán: 112000 USD</div>
+    </div>
+    <div class="col-md-3 hanghoa">
+        <a asp-action="ChiTiet" asp-controller="HangHoa"
+           asp-route-mahh="1014">
+            <img src="~/Hinh/HangHoa/sachbt1.jpeg" />
+        </a>        
+        <div class="giaban"><p>Bộ sách bài tập lớp 5</p>
+        Giá bán: 90000 USD</div>
+    </div>
+    <div class="col-md-3 hanghoa">
+        <a asp-action="ChiTiet" asp-controller="HangHoa"
+           asp-route-mahh="1017">
+            <img src="~/Hinh/HangHoa/lop4.jpg" />
+        </a>
+        
+        <div class="giaban"><p>Sách giáo khoa lớp 4</p>
+        Giá bán: 112000 USD</div>
+    </div>
+    <div class="col-md-3 hanghoa">
+        <a asp-action="ChiTiet" asp-controller="HangHoa"
+           asp-route-mahh="1023">
+            <img src="~/Hinh/HangHoa/truyen_1.jpg" />
+        </a>
+        
+        <div class="giaban"><p>Doraemon</p>
+        Giá bán: 24000 USD</div>
+    </div>
+    <div class="col-md-3 hanghoa">
+        <a asp-action="ChiTiet" asp-controller="HangHoa"
+           asp-route-mahh="1018">
+            <img src="~/Hinh/HangHoa/lop2.jpg" />
+        </a>        
+        <div class="giaban"><p>Sách giáo khoa lớp 2</p>
+        Giá bán: 100000 USD</div>
+    </div>
+    <div class="col-md-3 hanghoa">
+        <a asp-action="ChiTiet" asp-controller="HangHoa"
+           asp-route-mahh="1024">
+            <img src="~/Hinh/HangHoa/truyen_2.jpg" />
+        </a>         
+            <div class="giaban"><p> Thám tử lừng dang conan tập 86</p>
+            Giá bán: 18000 USD
+            </div>
+    </div>
+</div>

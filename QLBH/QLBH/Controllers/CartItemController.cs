@@ -8,6 +8,7 @@ using System.Web;
 using QLBH.MyModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authorization;
+using System.Diagnostics;
 
 namespace QLBH.Controllers
 {
@@ -35,9 +36,23 @@ namespace QLBH.Controllers
         }
         public IActionResult Index()
         {
+            ViewBag.products = Carts;
+            PayPalConfig payPalConfig = PayPalService.getPayPalConfig();
+            ViewBag.payPalConfig = payPalConfig;
             return View(Carts);
         }
-
+        [Route("Success")]
+        public IActionResult Success()
+        {
+            //PDTHolder pdtHolder = new PDTHolder();
+            var result = PDTHolder.Success(Request.Query["tx"].ToString());
+            Debug.WriteLine("First Name: " + result.PayerFirstName);
+            Debug.WriteLine("Last Name: " + result.PayerLastName);
+            Debug.WriteLine("Email: " + result.PayerEmail);
+            Debug.WriteLine("InvoiceNumber: " + result.InvoiceNumber);
+            Debug.WriteLine("GrossTotal: " + result.GrossTotal);
+            return View("Success");
+        }
         public IActionResult AddToCart(int mahh, int qty)
         {
             List<CartItem> gioHang = Carts;
@@ -80,25 +95,6 @@ namespace QLBH.Controllers
             //lưu session
             HttpContext.Session.Set("GioHang", gioHang);
             return RedirectToAction("Index");
-        }
-        [Authorize]
-        public IActionResult Payment()
-        {
-            ShoppingCart myCart = new ShoppingCart(db, httpContextAccessor);
-            int MaDonHang = myCart.SaveCartToDatabase();
-            //gửi mail đến khách hàng
-            var MaKH = HttpContext.Session.GetString("MaKH");
-            KhachHang kh = db.KhachHang.SingleOrDefault(p => p.MaKh == MaKH);
-            try
-            {
-                GoogleMailer.Send(kh.Email, "Thong tin Don hang", ThongTinDonHangHtml(MaDonHang));
-                ViewBag.ThongBao = "Thông tin đơn hàng đã được gửi qua mail";
-            }
-            catch
-            {
-                ViewBag.ThongBao = "Chúng tôi sẽ liên hệ để xác nhận đơn hàng";
-            }
-            return View();
         }
         public string ThongTinDonHangHtml(int MaDonHang)
         {

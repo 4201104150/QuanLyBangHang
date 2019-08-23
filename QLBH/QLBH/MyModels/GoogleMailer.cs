@@ -5,8 +5,8 @@ namespace QLBH.MyModels
 {
     public class GoogleMailer
     {
-        static string email = "hocaspcore@gmail.com";//vui lòng sửa mail của bạn
-        static string password = "P@ssw0rd";//vui lòng sửa password của bạn
+        static string email = "shenlong436@gmail.com";//vui lòng sửa mail của bạn
+        static string password = "Doraemon98";//vui lòng sửa password của bạn
 
         // Gửi mail từ hệ thống
         public static void Send(string to, string subject, string body)
