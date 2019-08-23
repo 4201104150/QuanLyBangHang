@@ -35,6 +35,8 @@ namespace QLBH.Controllers
         }
         public IActionResult Index()
         {
+            CartItem a=new CartItem();
+            //test luôn đúng
             List<HangHoaViewModel> s = new List<HangHoaViewModel>() { new HangHoaViewModel { Id = 1, Name = "Gi do", Price = 10000, Quantity = 3 }, new HangHoaViewModel { Id = 2, Name = "Gi do 2", Price = 6000, Quantity = 3 } };
             ViewBag.products = s;
             PayPalConfig payPalConfig = PayPalService.getPayPalConfig();
