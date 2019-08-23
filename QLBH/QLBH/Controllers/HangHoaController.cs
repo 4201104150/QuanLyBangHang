@@ -26,7 +26,7 @@ namespace QLBH.Controllers
         {
             List<HangHoa> dsHangHoas = new List<HangHoa>();
             dsHangHoas = db.HangHoa.Where(p=>p.MaLoai==id).ToList();
-            ViewBag.loaidangchon = db.Loai.Where(p => p.MaLoai == id);
+            ViewBag.loaidangchon = db.Loai.Where(p => p.MaLoai == id).Select(p=>p.TenLoai);
             return View(dsHangHoas.Select(p => new HangHoa
             {
                 MaHh = p.MaHh,
@@ -44,9 +44,10 @@ namespace QLBH.Controllers
             {
                 return RedirectToAction("Index", "HangHoa");
             }
-
+            ViewBag.IDD = mahh;
             return View(hh);
         }
+        
         [HttpGet("san-pham/{url}", Name = "HangHoaSeoUrl")]
         public IActionResult HangHoaSeoUrl(string url)
         {
