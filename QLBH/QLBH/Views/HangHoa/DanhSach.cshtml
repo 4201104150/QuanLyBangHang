@@ -1,8 +1,12 @@
-﻿@model IEnumerable<QLBH.Models.HangHoa>
+﻿@model IEnumerable<QLBH.MyModels.Product>
 
 @{
     ViewData["Title"] = "Danh sách";
     Layout = "~/Views/Shared/_LayoutTongQuat.cshtml";
+}
+@{
+    string loai = "Tất cả loại sp";
+    loai = ViewBag.Loai.TenLoaiSeoUrl;
 }
 <style>
     .hanghoa {
@@ -32,11 +36,10 @@
     @foreach (var hh in Model)
     {
         <div class="col-md-3 hanghoa">
-            <a asp-action="ChiTiet" asp-controller="HangHoa"
-               asp-route-mahh="@hh.MaHh">
+            <a href="/@loai/@hh.TenHHSeoUrl">
                 <img src="~/Hinh/HangHoa/@hh.Hinh" />
             </a>
-            <h3>@hh.TenHh</h3>
+            <h3>@hh.TenHH</h3>
             <div class="giaban">Giá bán: @hh.DonGia đ</div>
         </div>
     }

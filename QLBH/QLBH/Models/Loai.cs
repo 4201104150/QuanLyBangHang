@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QLBH.MyModels;
+using System;
 using System.Collections.Generic;
 
 namespace QLBH.Models
@@ -17,5 +18,6 @@ namespace QLBH.Models
         public string Hinh { get; set; }
 
         public virtual ICollection<HangHoa> HangHoa { get; set; }
+        public string TenLoaiSeoUrl => TenLoai.SEOUrl();
     }
 }
